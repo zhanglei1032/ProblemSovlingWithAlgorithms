@@ -58,3 +58,16 @@ print("list function: ", t4.timeit(number=1000), "ms")
 #concatenate        O(k)        两个列表相加取决于第二个列表的长度（把第二个列表的元素逐个添加都第一个列表）
 #sort               O(nlogn)
 #multiply           O(nk)
+
+
+
+pop_zero = Timer("x.pop(0)", "from __main__ import x")
+pop_end = Timer("x.pop()", "from __main__ import x")
+
+x = list(range(2000000))
+
+print("pop_zero: ", pop_zero.timeit(number=1000), "ms")
+print("pop_end: ", pop_end.timeit(number=1000), "ms")
+
+#pop_zero:  1.6769400744710765 ms
+#pop_end:  0.0000751653865336 ms
