@@ -41,4 +41,20 @@ print("list function: ", t4.timeit(number=1000), "ms")
 #list function:  0.012014990815657711 ms
 
 
-
+#操作              Big-O
+#index[x]           O(1)
+#index[x] = y       O(1)
+#append             O(1)
+#pop()              O(1)
+#pop(i)             O(n)        删除第i个元素后，后续元素都前移一位
+#insert(i, item)    O(n)        元素i以后的元素都需要后移一位
+#del operator       O(n)
+#iteration          O(n)
+#contains(i)        O(n)
+#get slice[x:y]     O(k)
+#del slice          O(n)
+#set slice          O(n + k)
+#reverse            O(n)
+#concatenate        O(k)        两个列表相加取决于第二个列表的长度（把第二个列表的元素逐个添加都第一个列表）
+#sort               O(nlogn)
+#multiply           O(nk)
