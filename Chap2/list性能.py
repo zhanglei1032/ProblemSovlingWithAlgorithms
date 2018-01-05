@@ -69,5 +69,6 @@ x = list(range(2000000))
 print("pop_zero: ", pop_zero.timeit(number=1000), "ms")
 print("pop_end: ", pop_end.timeit(number=1000), "ms")
 
+#结果
 #pop_zero:  1.6769400744710765 ms
 #pop_end:  0.0000751653865336 ms
