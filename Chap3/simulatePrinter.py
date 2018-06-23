@@ -32,9 +32,10 @@ class Printer(object):
             return True
         else:
             return False
-
+    # 开始打印
     def startNext(self, newtask):
         self.currentTask = newtask
+        # 设置初始的剩余时间 
         self.timeRemaining = newtask.getPages() * 60 / self.pagerate
 
 
@@ -58,28 +59,30 @@ def simulation(numSeconds, pagesPerMinute):
     labprinter = Printer(pagesPerMinute)
     printQueue = Queue()
     waitingtimes = []
-    number = 0
+    number = 0 
     # 用循环模拟每一秒钟的情况
     for currentSecond in range(numSeconds):
+        # 有新任务时，任务入队
         if newPrintTask():
             number += 1
             task = Task(currentSecond, number)
             logging.info('第{}秒，任务{}进入打印队列, 共{}页'.format(currentSecond, task.number, task.pages))
             printQueue.enqueue(task)
-        # 当打印机不忙，打印队列不为空时，执行打印逻辑    
+        # 当打印机不忙，打印队列不为空时，开始下一个任务   
         if (not labprinter.busy()) and (not printQueue.isEmpty()):
             nexttask = printQueue.dequeue()
             waittime = nexttask.waitTime(currentSecond)
             logging.info('第{}秒，任务{}开始打印，等待了{}秒。'.format(currentSecond, task.number, waittime))
             waitingtimes.append(waittime)
             labprinter.startNext(nexttask)
-        # 当前任务剩余时间 -1， 为0时结束任务     
+        # 执行打印逻辑 当前任务剩余时间 -1， 为0时结束任务     
         labprinter.tick(currentSecond)
-    averageWait = sum(waitingtimes) / len(waitingtimes)
-    logging.info('共执行了{}打印任务'.format(number))
-    logging.info("Average Wait {} secs {} tasks remaining.".format(averageWait, printQueue.size()))
+    averageWait = sum(waitingtimes) / len(waitingtimes) 
+    logging.info("共执行了{}项打印任务，平均等待时间为{}秒， 打印队列里还有{}项任务".format\
+        (number, averageWait, printQueue.size()))
 
 # 模拟新任务的随机发生
+# 平均每小时有20个打印任务，相当于平均180秒一个任务
 def newPrintTask():
     num = random.randrange(1, 181)
     if num == 180:
